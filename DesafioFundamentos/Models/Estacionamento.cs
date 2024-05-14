@@ -21,7 +21,35 @@ namespace DesafioFundamentos.Models
             Console.WriteLine("Digite a placa do veículo para estacionar:");
             string placa = Console.ReadLine().ToUpper();
 
-            veiculos.Add(placa);
+            if (placa == "")
+            {
+                throw new ArgumentException("Por favor, digite a placa do veículo.");
+            }
+            if (placa.Length > 8 || placa.Length < 8)
+            {
+                throw new ArgumentException("Informe uma placa válida!");
+            }
+
+            if (char.IsLetter(placa, 4))
+            {
+
+                // Verifica se a placa está no formato: três letras, um número, uma letra e dois números.
+                var padraoMercosul = new Regex("[a-zA-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{2}");
+                padraoMercosul.IsMatch(placa);
+
+                veiculos.Add(placa);
+
+            }
+            else
+            {
+                // Verifica se os 3 primeiros caracteres são letras e se os 4 últimos são números.
+                var padraoAntigo = new Regex("^[a-zA-Z]{3}-?[0-9]{4}$");
+                padraoAntigo.IsMatch(placa);
+
+                veiculos.Add(placa);
+
+            }
+
 
         }
 
